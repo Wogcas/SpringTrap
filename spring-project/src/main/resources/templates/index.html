@@ -12,4 +12,81 @@
     <h1 class="text-4xl font-bold p-8">Home Page</h1>
 </header>
 </body>
+</html><!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        class="h-full bg-light">
+<head>
+    <title>Task Collaborator</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body class="h-full">
+<header class="bg-primary text-light p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Task Collaborator</h1>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:text-accent">Dashboard</a></li>
+                <li><a href="#" class="hover:text-accent">Projects</a></li>
+                <li><a href="#" class="hover:text-accent">Profile</a></li>
+                <li><a href="login.html" class="hover:text-accent">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container mx-auto mt-8 p-4">
+    <div class="flex space-x-4 overflow-x-auto pb-4">
+        <!-- To Do Column -->
+        <div class="flex-shrink-0 w-80">
+            <div class="bg-neutral p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 text-secondary">To Do</h2>
+                <div class="space-y-2">
+                    <div class="bg-light p-2 rounded shadow">
+                        <h3 class="font-semibold text-secondary">Task 1</h3>
+                        <p class="text-sm text-gray-600">Description of Task 1</p>
+                    </div>
+                    <div class="bg-light p-2 rounded shadow">
+                        <h3 class="font-semibold text-secondary">Task 2</h3>
+                        <p class="text-sm text-gray-600">Description of Task 2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="flex-shrink-0 w-80">
+            <div class="bg-neutral p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 text-secondary">In Progress</h2>
+                <div class="space-y-2">
+                    <div class="bg-light p-2 rounded shadow">
+                        <h3 class="font-semibold text-secondary">Task 3</h3>
+                        <p class="text-sm text-gray-600">Description of Task 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="flex-shrink-0 w-80">
+            <div class="bg-neutral p-4 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 text-secondary">Done</h2>
+                <div class="space-y-2">
+                    <div class="bg-light p-2 rounded shadow">
+                        <h3 class="font-semibold text-secondary">Task 4</h3>
+                        <p class="text-sm text-gray-600">Description of Task 4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-secondary text-light p-4 mt-8">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2023 Task Collaborator. All rights reserved.</p>
+    </div>
+</footer>
+</body>
 </html>

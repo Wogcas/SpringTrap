@@ -12,8 +12,12 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String customLogin() {
+    public String login() {
         return "login";
     }
 
+    @GetMapping("/sign-up")
+    public String signUp() {
+        return "sign-up";
+    }
 }
