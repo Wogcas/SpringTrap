@@ -1,4 +1,4 @@
-package services.spring_project;
+package services.spring_project.config;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,5 +11,9 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String customLogin() {
+        return "login";
+    }
 
 }
