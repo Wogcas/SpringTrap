@@ -1,20 +1,24 @@
 package services.spring_project.authentication;
 
-import jakarta.transaction.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    public AuthController(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/")
@@ -28,13 +32,36 @@ public class AuthController {
     }
 
     @GetMapping("/sign-up")
-    public String signUp() {
+    public String signUp(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
         return "sign-up";
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
-    void create(@RequestBody User user){
+    @PostMapping("/sign-up")
+    public String create(@ModelAttribute("userDTO") UserDTO userDTO){
+
+        logger.debug("Recibiendo datos para el registro de usuario: " + userDTO.getUsername());
+
+
+        //Need to fix
+        if(!userDTO.getPassword().equals(userDTO.getConfirmPassword())){
+            return "sign-up?error=password-mismatch";
+        }
+
+        //Need to fix
+        if(userRepository.findByEmail(userDTO.getEmail()).isPresent()){
+            return "sign-up?error=email-already-exists";
+        }
+
+        User user = UserAdapter.toEntity(userDTO);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
         userRepository.save(user);
+
+        logger.info("Usuario creado con éxito: " + userDTO.getUsername());
+
+        return "login";
     }
 }
