@@ -5,7 +5,9 @@
         class="h-full bg-light">
 <head>
     <title>Sign Up Page</title>
-    <link th:href="@{/main.css}" rel="stylesheet" />
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script th:src="@{/alerts.js}" defer></script>
 </head>
 <body class="h-full">
 
@@ -16,6 +18,8 @@
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form class="space-y-6" th:action="@{/sign-up}" th:object="${userDTO}" method="POST">
+            <input type="hidden" id="errorMessage" th:value="${error}">
+            <input type="hidden" id="successMessage" th:value="${success}">
             <div>
                 <label for="username" class="block text-sm font-medium leading-6 text-secondary">Username</label>
                 <div class="mt-2">
@@ -53,7 +57,7 @@
             </div>
 
             <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-light shadow-sm hover:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Sign up</button>
+                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign up</button>
             </div>
         </form>
 

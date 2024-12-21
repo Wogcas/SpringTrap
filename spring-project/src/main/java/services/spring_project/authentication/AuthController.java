@@ -1,5 +1,6 @@
 package services.spring_project.authentication;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -39,29 +41,24 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
-    public String create(@ModelAttribute("userDTO") UserDTO userDTO){
+    public String signUpUser(@ModelAttribute("userDTO") UserDTO userDTO, Model model, HttpSession session) {
 
-        logger.debug("Recibiendo datos para el registro de usuario: " + userDTO.getUsername());
-
-
-        //Need to fix
         if(!userDTO.getPassword().equals(userDTO.getConfirmPassword())){
-            return "sign-up?error=password-mismatch";
+            model.addAttribute("error", "Passwords mismatch");
+            return "sign-up";
         }
 
-        //Need to fix
         if(userRepository.findByEmail(userDTO.getEmail()).isPresent()){
-            return "sign-up?error=email-already-exists";
+            model.addAttribute("error", "Email registered already");
+            return "sign-up";
         }
 
         User user = UserAdapter.toEntity(userDTO);
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
         userRepository.save(user);
 
-        logger.info("Usuario creado con éxito: " + userDTO.getUsername());
-
-        return "login";
+        session.setAttribute("success", "Account created successfully");
+        return "redirect:/login";
     }
 }
